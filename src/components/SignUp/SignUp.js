@@ -9,7 +9,7 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate()
-    const [createUserWithEmailAndPassword , user] = useCreateUserWithEmailAndPassword(auth)
+    const [createUserWithEmailAndPassword , loading, user] = useCreateUserWithEmailAndPassword(auth)
     const [sendEmailVerification] = useSendEmailVerification(auth);
 
     const handleEmailBlur = (e) => {
@@ -62,6 +62,9 @@ const SignUp = () => {
                     <p style={{color: 'red'}}>{error}</p>
                     <input className="form-submit" type="submit" value="Sign Up" />
                 </form>
+                {
+                        loading && <p>loading...</p>
+                    }
                 <p>Already Have An Account? <Link className="form-link" to="/login">Login Here</Link></p>
                 
             </div>
