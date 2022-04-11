@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import './Login.css'
 const Login = () => {
@@ -8,6 +8,8 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth)
     const navigate = useNavigate()
+    const location = useLocation()
+    const form = location?.state?.form?.pathname || '/'
 
     const handleEmailBlur = (e) => {
         setEmail(e.target.value)
@@ -16,7 +18,7 @@ const Login = () => {
         setPassword(e.target.value)
     }
     if(user){
-        navigate('/home')
+        navigate(form, {replace : true})
     }
     const handleCreateUser = e => {
         e.preventDefault()
@@ -35,7 +37,7 @@ const Login = () => {
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
-                        <input onBlur={handlePasswordBlur} type="password" name="password" id="" required />
+                        <input onChange={handlePasswordBlur} type="password" name="password" id="" required />
                     </div>
                     {
                         loading && <p>loading...</p>
